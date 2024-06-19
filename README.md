@@ -12,7 +12,7 @@ Important to create a .env file and put in your own CLIENT_ID and CLIENT_SECRET 
 
 - Automate the authorization code fetching process.
 
-- Figure out why the authorization code needs to be imputed twice (run the code 2 seperate times) to fetch the most recent data
+- Figure out why the authorization code needs to be inputed twice (run the code 2 seperate times) to fetch the most recent data
 
 - Schedule the script to run at regular intervals to keep the database updated.
 
