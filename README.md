@@ -17,3 +17,5 @@ Important to create a .env file and put in your own CLIENT_ID and CLIENT_SECRET 
 - Schedule the script to run at regular intervals to keep the database updated.
 
 If you have any improvements to this project, please reach out. This is my first time working with APIs so I'd love to enhance the code and learn new things. Thanks!
+
+Credit to the Spotify API and documentation, and ChatGPT for help with the database schema :)
