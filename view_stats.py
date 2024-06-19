@@ -1,6 +1,6 @@
 import sqlite3
 
-# Function to view top 10 tracks ordered by total minutes listened since June 16th, 2024 (Using the last duplicate track date)
+#  View top 10 tracks ordered by total minutes listened since June 16th, 2024 (Using the last duplicate track date)
 def view_tracks():
     conn = sqlite3.connect("stats.db")
     c = conn.cursor()
@@ -26,12 +26,12 @@ The view_artists adn view_albums functions are not yet implemented, I am not sur
 number of minutes for these categories
 '''
 
-# Function to view top artists ordered by popularity
+# View top artists (Unfinished)
 def view_artists():
     conn = sqlite3.connect("stats.db")
     c = conn.cursor()
 
-    c.execute("SELECT * FROM artists ORDER BY popularity DESC LIMIT 10")
+    c.execute("SELECT * FROM artists DESC LIMIT 10")
     rows = c.fetchall()
 
     print("Top Artists:")
@@ -40,12 +40,12 @@ def view_artists():
 
     conn.close()
 
-# Function to view top albums ordered by release date
+# View top albums (Unfinished)
 def view_albums():
     conn = sqlite3.connect("stats.db")
     c = conn.cursor()
 
-    c.execute("SELECT * FROM albums ORDER BY release_date DESC LIMIT 10")
+    c.execute("SELECT * FROM albums DESC LIMIT 10")
     rows = c.fetchall()
 
     print("Top Albums:")
