@@ -10,9 +10,9 @@ Important to create a .env file and put in your own CLIENT_ID and CLIENT_SECRET 
 
 - Implement view_artists and view_albums functions to calculate total minutes listened for these categories. (In progress)
 
-- Automate the authorization code fetching process.
+- Automate the authorization code fetching process. (Coming very soon)
 
-- Figure out why the authorization code needs to be inputed twice (run the code 2 seperate times) to fetch the most recent data
+- Figure out why the main script sometimes needs to be ran twice to fetch the most recent data (Bug only happens every once in a while I dont know why)
 
 - Schedule the script to run at regular intervals to keep the database updated.
 
