@@ -10,10 +10,8 @@ Important to create a .env file and put in your own CLIENT_ID and CLIENT_SECRET 
 
 - Implement view_artists and view_albums functions to calculate total minutes listened for these categories. (In progress)
 
-- Automate the authorization code fetching process. (Coming very soon)
+- Figure out why the main script sometimes needs to be ran twice to fetch the most recent data (This only ever happens really in my testing when code is ran alot in a period of time)
 
-- Figure out why the main script sometimes needs to be ran twice to fetch the most recent data (Bug only happens every once in a while I dont know why)
-
-- Schedule the script to run at regular intervals to keep the database updated.
+- Schedule the script to run at regular intervals to keep the database updated. (Might do windows task scheduling, if so I will upload a video of how to set it up here)
 
 If you have any improvements to this project, please reach out. This is my first time working with APIs so I'd love to enhance the code and learn new things. Thanks!
