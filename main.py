@@ -1,16 +1,23 @@
 import os
 import base64
-from dotenv import load_dotenv
+from dotenv import main
 import webbrowser
 from requests import post
 import sqlite3
 import requests
+from flask import Flask, request
+from threading import Thread
+from queue import Queue
+
 
 # Load environment variables from .env file
-load_dotenv()
+main.load_dotenv()
 
 client_id = os.getenv("CLIENT_ID")
 client_secret = os.getenv("CLIENT_SECRET")
+
+auth_code_queue = Queue()
+app = Flask(__name__)
 
 
 # Open Spotify authorization URL in the browser
@@ -25,7 +32,7 @@ def get_authorization_code():
     webbrowser.open(auth_url)
 
 
-# get token with Authorization Code
+# Get token with Authorization Code
 def get_token(auth_code):
     token_url = "https://accounts.spotify.com/api/token"
     auth_string = f"{client_id}:{client_secret}"
@@ -43,7 +50,7 @@ def get_token(auth_code):
     return response.json()
 
 
-# Function to fetch recently played tracks
+# Fetch recently played tracks
 def fetch_recently_played(access_token):
     url = "https://api.spotify.com/v1/me/player/recently-played?limit=50"
     headers = {
@@ -116,29 +123,40 @@ def store_tracks(tracks):
     conn.close()
 
 
+# Integrate Flask app to automate fetching the authorization code from URL
+@app.route('/callback')
+def callback():
+    authorization_code = request.args.get('code')
+    auth_code_queue.put(authorization_code)
+    return "Authorization code received successfully."
+
+
+# Function to start Flask app in a separate thread
+def start_flask():
+    app.run(port=8888)
+
+
 def main():
-    # Create tables if they do not exist (They exist now)
     create_tables()
 
-    # Get and input Authorization code, manually in web browser
-    # For some reason, which wasn't an issue earlier in this project is that you have to run this input the auth code,
-    # then re-run the code again to get the 50 most recent songs
-    # Want to use flask to help automate this task and use a scheduled event that runs this program every hour
+    # Start Flask server in a separate thread
+    flask_thread = Thread(target=start_flask)
+    flask_thread.start()
+
+    # Get auth code
     get_authorization_code()
-    auth_code = input("Enter the authorization code from the callback URL: ")
+
+    # Wait for authorization code from Flask callback
+    authorization_code = auth_code_queue.get()
 
     # Exchange authorization code for tokens
-    tokens = get_token(auth_code)
-
+    tokens = get_token(authorization_code)
     access_token = tokens["access_token"]
-    # Not needed
-    print("Access Token: ", access_token, "\n")
 
-    # Fetch and store recently played tracks
     recently_played = fetch_recently_played(access_token)
     store_tracks(recently_played)
 
-    # Debug print statement. Lets user know that everything worked and the new data has been stored
+    # New data has been stored in database
     print("Data has been successfully stored in the database.")
 
 
