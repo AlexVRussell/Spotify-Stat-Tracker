@@ -3,7 +3,8 @@ from datetime import datetime
 
 timeUpdated = datetime.now()
 
-# Function to view top 10 tracks ordered by total minutes listened since June 16th, 2024 (Using the last duplicate track date)
+
+# Function to view top 10 tracks ordered by total minutes listened since June 16th, 2024 (last duplicate track date)
 def view_tracks():
     conn = sqlite3.connect("stats.db")
     c = conn.cursor()
@@ -19,16 +20,28 @@ def view_tracks():
 
     print("Top Tracks Updated: " + timeUpdated.strftime("%B %d, %Y at %H:%M:%S"))
     print("Top Tracks by Total Minutes Listened:\n")
+
     for row in rows:
         track_id, name, artist, album, total_minutes = row
-        print(f"Track: {name}, Artist: {artist}, Album: {album}, Total Minutes: {total_minutes}")
+
+        # Better to put a line break after each song? "\n"
+        print(f"Track: {name} | Artist: {artist} | Album: {album} | Total Minutes: {total_minutes:.2f}")
+
+    # Used for easy comparison for last update (Debugging)
+    print("")
+    for row in rows:
+        track_id, name, artist, album, total_minutes = row
+
+        print(f"{name:} - {total_minutes:.2f}")
 
     conn.close()
 
+
 '''
-The view_artists adn view_albums functions are not yet implemented, I am not sure how I am going to calculate the total 
+The view_artists adn view_albums functions are not yet implemented, still working on how to calculate the total 
 number of minutes for these categories
 '''
+
 
 # Function to view top artists ordered by popularity
 def view_artists():
@@ -44,6 +57,7 @@ def view_artists():
 
     conn.close()
 
+
 # Function to view top albums ordered by release date
 def view_albums():
     conn = sqlite3.connect("stats.db")
@@ -58,9 +72,6 @@ def view_albums():
 
     conn.close()
 
+
 if __name__ == "__main__":
     view_tracks()
-    print()
-    view_artists()
-    print()
-    view_albums()
