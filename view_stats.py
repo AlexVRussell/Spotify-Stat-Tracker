@@ -42,36 +42,5 @@ The view_artists adn view_albums functions are not yet implemented, still workin
 number of minutes for these categories
 '''
 
-
-# Function to view top artists ordered by popularity
-def view_artists():
-    conn = sqlite3.connect("stats.db")
-    c = conn.cursor()
-
-    c.execute("SELECT * FROM artists ORDER BY popularity DESC LIMIT 10")
-    rows = c.fetchall()
-
-    print("Top Artists:")
-    for row in rows:
-        print(row)
-
-    conn.close()
-
-
-# Function to view top albums ordered by release date
-def view_albums():
-    conn = sqlite3.connect("stats.db")
-    c = conn.cursor()
-
-    c.execute("SELECT * FROM albums ORDER BY release_date DESC LIMIT 10")
-    rows = c.fetchall()
-
-    print("Top Albums:")
-    for row in rows:
-        print(row)
-
-    conn.close()
-
-
 if __name__ == "__main__":
     view_tracks()
