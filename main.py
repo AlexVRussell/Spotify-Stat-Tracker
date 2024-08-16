@@ -104,7 +104,7 @@ def store_tracks(tracks):
         duration_ms = track['duration_ms']
 
         # Convert milliseconds to minutes
-        duration_min = duration_ms // 60000
+        duration_min = duration_ms / 60000
 
         # Check if the track already exists
         c.execute('''SELECT 1 FROM plays WHERE track_id = ? AND played_at = ?''', (track['id'], played_at))
@@ -117,7 +117,7 @@ def store_tracks(tracks):
                        track['album']['name'], played_at, duration_min))
         else:
             # Print the tracks that in that call have already been stored in the database
-            print(f"Track already exists in database: {track['name']} at {played_at}")
+            print(f"Track already exists in database: {track['name']} at {played_at} Duration - {duration_min:.2f} minutes")
 
     conn.commit()
     conn.close()
