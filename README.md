@@ -6,6 +6,8 @@ Takes the authorization code from the Spotify authoraztion url and input. Run vi
 
 Important to create a .env file and put in your own CLIENT_ID and CLIENT_SECRET from the Spotify for Developers Dashboard.
 
+Disclaimer, there is no direct endpoint in Spotify's API for minutes or streams. So the minutes may be off by some decimal points, but after looking into majority of the songs I most listen to the duration is very accurate.
+
 *Improvements*
 
 - Implement view_artists and view_albums functions to calculate total minutes listened for these categories. (In progress)
