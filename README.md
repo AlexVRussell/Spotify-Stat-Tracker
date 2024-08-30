@@ -12,8 +12,6 @@ Disclaimer, there is no direct endpoint in Spotify's API for minutes or streams.
 
 - Implement view_artists and view_albums functions to calculate total minutes listened for these categories. (In progress)
 
-- Figure out why the main script sometimes needs to be ran twice to fetch the most recent data (This only ever happens really in my testing when code is ran alot in a period of time)
-
 - Schedule the script to run at regular intervals to keep the database updated. (Might do windows task scheduling, if so I will upload a video of how to set it up here)
 
 If you have any improvements to this project, please reach out. This is my first time working with APIs so I'd love to enhance the code and learn new things. Thanks!
