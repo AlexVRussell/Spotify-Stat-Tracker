@@ -38,7 +38,7 @@ def view_tracks():
 
 
 '''
-The view_artists adn view_albums functions are not yet implemented, still working on how to calculate the total 
+The view_artists and view_albums functions are not yet implemented, still working on how to calculate the total 
 number of minutes for these categories
 '''
 
