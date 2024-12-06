@@ -3,6 +3,7 @@ from datetime import datetime
 
 timeUpdated = datetime.now()
 
+counter = 0
 
 # Function to view top 10 tracks ordered by total minutes listened since June 16th, 2024 (last duplicate track date)
 def view_tracks():
