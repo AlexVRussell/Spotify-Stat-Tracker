@@ -104,7 +104,7 @@ def store_tracks(tracks):
         duration_ms = track['duration_ms']
 
         # Convert milliseconds to minutes
-        duration_min = duration_ms / 60000
+        duration_min = duration_ms // 60000
 
         # Check if the track already exists
         c.execute('''SELECT 1 FROM plays WHERE track_id = ? AND played_at = ?''', (track['id'], played_at))
