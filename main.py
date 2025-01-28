@@ -21,6 +21,7 @@ app = Flask(__name__)
 
 
 # Open Spotify authorization URL in the browser
+# Prompts user to log into Spotify
 def get_authorization_code():
     auth_url = (
         "https://accounts.spotify.com/authorize"
@@ -28,6 +29,7 @@ def get_authorization_code():
         f"&client_id={client_id}"
         "&scope=user-read-recently-played"
         "&redirect_uri=http://localhost:8888/callback"
+        "&show_dialog=true"
     )
     webbrowser.open(auth_url)
 

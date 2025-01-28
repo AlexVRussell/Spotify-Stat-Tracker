@@ -6,8 +6,7 @@ timeUpdated = datetime.now()
 counter = 0
 
 # Function to view top 10 tracks ordered by total minutes listened since June 16th, 2024 (last duplicate track date)
-# Reset failed because I logged into the wrong Spotify account, now just trying to troubleshoot how to sign in to my
-# main Spotify account, so I get the correct data.
+# Figured out how to prompt users now lol. So DB is updated up until January 19th 2025, so it will be inaccurate.
 def view_tracks():
     conn = sqlite3.connect("stats.db")
     c = conn.cursor()
