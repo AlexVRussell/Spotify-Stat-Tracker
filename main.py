@@ -105,6 +105,10 @@ def store_tracks(tracks):
         played_at = item['played_at']
         duration_ms = track['duration_ms']
 
+        # If track is played for less than 30 seconds, don't add to database
+        if duration_ms < 30000:
+            continue
+
         # Convert milliseconds to minutes
         duration_min = duration_ms // 60000
 

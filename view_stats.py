@@ -3,8 +3,6 @@ from datetime import datetime
 
 timeUpdated = datetime.now()
 
-counter = 0
-
 # Function to view top 10 tracks ordered by total minutes listened since June 16th, 2024 (last duplicate track date)
 # Figured out how to prompt users now lol. So DB is updated up until January 19th 2025, so it will be inaccurate.
 def view_tracks():
@@ -26,18 +24,16 @@ def view_tracks():
     for row in rows:
         track_id, name, artist, album, total_minutes = row
 
-        print(f"Track: {name} | Artist: {artist} | Album: {album} | Total Minutes: {total_minutes:.2f}")
+        print(f"Track: {name} | Artist: {artist} | Album: {album} | Total Minutes: {total_minutes:.2f} min")
 
-    # Easier way to read top 10 songs, but less info about the songs
-    print("Top Tracks Updated: " + timeUpdated.strftime("%B %d, %Y at %H:%M:%S"))
-    print("Top Tracks by Total Minutes Listened:\n")
+    # This format is easier to read containing less info about each song
+    print("\n\nTop Tracks 10 Updated: " + timeUpdated.strftime("%B %d, %Y at %H:%M:%S"))
 
-    # Used for easy comparison for last update (Debugging)
-    print("")
+    print("-------------------------------------------------------------------")
     for row in rows:
         track_id, name, artist, album, total_minutes = row
 
-        print(f"{name:} - {total_minutes:.2f}")
+        print(f"{name:} - {total_minutes:.2f} min")
 
     conn.close()
 
