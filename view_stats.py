@@ -3,8 +3,7 @@ from datetime import datetime
 
 timeUpdated = datetime.now()
 
-# Function to view top 10 tracks ordered by total minutes listened since June 16th, 2024 (last duplicate track date)
-# Figured out how to prompt users now lol. So DB is updated up until January 19th 2025, so it will be inaccurate.
+# DB is getting cleaned, so should be up to date as of February 24th, 2026
 def view_tracks():
     conn = sqlite3.connect("stats.db")
     c = conn.cursor()
@@ -22,6 +21,7 @@ def view_tracks():
     print("Top Tracks by Total Minutes Listened:\n")
 
     for row in rows:
+        # streams = total_minutes / track['duration_ms']
         track_id, name, artist, album, total_minutes = row
 
         print(f"Track: {name} | Artist: {artist} | Album: {album} | Total Minutes: {total_minutes:.2f} min")

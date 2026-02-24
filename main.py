@@ -9,8 +9,6 @@ from flask import Flask, request
 from threading import Thread
 from queue import Queue
 
-
-# Load environment variables from .env file
 main.load_dotenv()
 
 client_id = os.getenv("CLIENT_ID")
@@ -28,13 +26,11 @@ def get_authorization_code():
         "?response_type=code"
         f"&client_id={client_id}"
         "&scope=user-read-recently-played"
-        "&redirect_uri=http://localhost:8888/callback"
+        "&redirect_uri=http://127.0.0.1:8888/callback"
         "&show_dialog=true"
     )
     webbrowser.open(auth_url)
 
-
-# Get token with Authorization Code
 def get_token(auth_code):
     token_url = "https://accounts.spotify.com/api/token"
     auth_string = f"{client_id}:{client_secret}"
@@ -46,13 +42,11 @@ def get_token(auth_code):
     data = {
         "grant_type": "authorization_code",
         "code": auth_code,
-        "redirect_uri": "http://localhost:8888/callback"
+        "redirect_uri": "http://127.0.0.1:8888/callback"
     }
     response = post(token_url, headers=headers, data=data)
     return response.json()
 
-
-# Fetch recently played tracks
 def fetch_recently_played(access_token):
     url = "https://api.spotify.com/v1/me/player/recently-played?limit=50"
     headers = {
@@ -61,13 +55,10 @@ def fetch_recently_played(access_token):
     response = requests.get(url, headers=headers)
     return response.json()
 
-
-# Create tables if they do not exist
 def create_tables():
     conn = sqlite3.connect("stats.db")
     c = conn.cursor()
 
-    # Create plays table if it does not exist
     c.execute('''CREATE TABLE IF NOT EXISTS plays (
                     track_id TEXT,
                     name TEXT,
@@ -94,8 +85,6 @@ def create_tables():
     conn.commit()
     conn.close()
 
-
-# Function to store tracks in stats.db (database)
 def store_tracks(tracks):
     conn = sqlite3.connect("stats.db")
     c = conn.cursor()
@@ -105,14 +94,11 @@ def store_tracks(tracks):
         played_at = item['played_at']
         duration_ms = track['duration_ms']
 
-        # If track is played for less than 30 seconds, don't add to database
         if duration_ms < 30000:
             continue
 
-        # Convert milliseconds to minutes
         duration_min = duration_ms // 60000
 
-        # Check if the track already exists
         c.execute('''SELECT 1 FROM plays WHERE track_id = ? AND played_at = ?''', (track['id'], played_at))
         exists = c.fetchone()
 
@@ -128,28 +114,20 @@ def store_tracks(tracks):
     conn.commit()
     conn.close()
 
-
-# Integrate Flask app to automate fetching the authorization code from URL
 @app.route('/callback')
 def callback():
     authorization_code = request.args.get('code')
     auth_code_queue.put(authorization_code)
     return "Authorization code received successfully."
 
-
-# Function to start Flask app in a separate thread
 def start_flask():
     app.run(port=8888)
 
 
 def main():
     create_tables()
-
-    # Start Flask server in a separate thread
     flask_thread = Thread(target=start_flask)
     flask_thread.start()
-
-    # Get auth code
     get_authorization_code()
 
     # Wait for authorization code from Flask callback
@@ -161,8 +139,6 @@ def main():
 
     recently_played = fetch_recently_played(access_token)
     store_tracks(recently_played)
-
-    # New data has been stored in database
     print("Data has been successfully stored in the database.")
 
 
